@@ -1,4 +1,7 @@
-# CandleVision-
+# CandleVision
+
+
+# Environment Setup
 * ```python install -m venv venv```
 ```.venv\Scripts\activate   ``` 
 
