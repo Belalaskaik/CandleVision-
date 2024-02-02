@@ -1,4 +1,3 @@
-<<<<<<< main
 # CandleVision
 
 Work In Progress...
