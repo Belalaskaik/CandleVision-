@@ -1,3 +1,4 @@
+<<<<<<< main
 # CandleVision
 
 Work In Progress...
@@ -40,4 +41,13 @@ In our project, CandleVision, we plan to integrate computer vision and AI, empha
 - Continuous Integration/Continuous Deployment (CI/CD): GitHub Actions
 
 
+=======
+
+# Environment Setup
+* ```python install -m venv venv```
+```.venv\Scripts\activate   ``` 
+
+* ```pip install -r requirements```    
+### Running the server:
+* ```uvicorn app.main:app --reload```
 
