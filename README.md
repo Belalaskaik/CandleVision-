@@ -1,4 +1,7 @@
 # CandleVision-
+* ```python install -m venv venv```
+```.venv\Scripts\activate   ``` 
 
-Hamid
-Belal
+* ```pip install -r requirements```    
+### Running the server:
+* ```uvicorn app.main:app --reload```
