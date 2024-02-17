@@ -157,7 +157,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Hamid Suha - [📫](scuf) - hsuha@csu.fullerton.edu
 
-Belal Skaik - [📫](scuf) - ....@csu.fullerton.edu
+Belal Skaik - [📫](scuf) - belalaskaik@gmail.com
 
 Project Link: [Github]([https://github.com/your_username/repo_name](https://github.com/Belalaskaik/CandleVision-))
 
