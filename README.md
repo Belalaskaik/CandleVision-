@@ -52,6 +52,25 @@ Use the `README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This is how you begin setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+### Environment Setup
+* ```python install -m venv venv```
+```.venv\Scripts\activate   ``` 
+
+### Installation
+* ```pip install -r requirements```
+      
+### Running the server:
+* ```uvicorn app.main:app --reload```
+
+
 ### Technology Stack
 
 - Data Ingestion: Yahoo finance API, X, News medias
@@ -97,19 +116,4 @@ This section lists any major frameworks/libraries used in our project (NEEDS UPD
 * [![JQuery][JQuery.com]][JQuery-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is how you begin setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-# Environment Setup
-* ```python install -m venv venv```
-```.venv\Scripts\activate   ``` 
-
-* ```pip install -r requirements```    
-### Running the server:
-* ```uvicorn app.main:app --reload```
 
