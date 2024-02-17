@@ -178,7 +178,8 @@ Example:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Technology Stack
+### Undecided Yet....
+Technology Stack
 
 - Data Ingestion: Yahoo finance API, X, News medias
 
@@ -190,13 +191,13 @@ Example:
 
 - Local Jupyter Notebook: Suitable for data exploration, preprocessing, and algorithm development.
 
-### Machine Learning Libraries:
+Machine Learning Libraries:
 
 -TensorFlow or PyTorch for developing, training, and evaluating machine learning models.
 
 -Scikit-learn for basic machine learning tasks and data preprocessing.
 
-### Software Development:
+Software Development:
 
 - UX/UI: Figma
 
