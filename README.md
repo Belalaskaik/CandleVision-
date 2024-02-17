@@ -60,14 +60,14 @@ This is how you begin setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
-### Environment Setup
+#### Environment Setup
 * ```python install -m venv venv```
 ```.venv\Scripts\activate   ``` 
 
-### Installation
+#### Installation
 * ```pip install -r requirements```
       
-### Running the server:
+#### Running the server:
 * ```uvicorn app.main:app --reload```
 
 
