@@ -1,7 +1,7 @@
-<<<<<<< main
+
 # CandleVision
 
-Work In Progress...
+🔭 currently working on
 
 In our project, CandleVision, we plan to integrate computer vision and AI, emphasizing the importance of candlestick patterns in financial market analysis. By incorporating sentiment analysis, our goal is to provide a comprehensive and accessible understanding of market trends for traders of various skill levels. The combination of advanced computer vision and detailed analysis of candlestick patterns aims to simplify and improve trading decision-making. CandleVision is poised to demonstrate how AI can offer deeper insights and a more informed approach to analyzing financial markets.
 
@@ -52,7 +52,7 @@ Use the `README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Technology Stack
+### Technology Stack
 
 - Data Ingestion: Yahoo finance API, X, News medias
 
@@ -64,13 +64,13 @@ Use the `README.md` to get started.
 
 - Local Jupyter Notebook: Suitable for data exploration, preprocessing, and algorithm development.
 
-## Machine Learning Libraries:
+### Machine Learning Libraries:
 
 -TensorFlow or PyTorch for developing, training, and evaluating machine learning models.
 
 -Scikit-learn for basic machine learning tasks and data preprocessing.
 
-## Software Development:
+### Software Development:
 
 - UX/UI: Figma
 
