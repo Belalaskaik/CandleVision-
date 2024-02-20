@@ -73,7 +73,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 #### Environment Setup
-* ```python install -m venv venv```
+* ```python -m venv venv```
 ```.venv\Scripts\activate   ``` 
 
 #### Installation
