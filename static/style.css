@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+}
+body {
+    display: flex;
+    align-items: center; /* This centers the content vertically */
+    justify-content: center; /* This centers the content horizontally */
+    flex-direction: column; /* This stacks the content vertically */
+    margin: 0; /* Ensures there is no default margin interfering with your layout */
+    padding: 0; /* You can add this if you want to ensure no padding is affecting your layout */
+}
+.tradingview-widget-container {
+    position: absolute; /* or 'absolute' if you don't want it to stick during scroll */
+    bottom: 0px;
+    left: 3px;
+    width: 100px; /* Adjust as needed */
+    height: 500px; /* Adjust as needed */
+
+}
