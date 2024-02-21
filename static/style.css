@@ -10,6 +10,7 @@ body {
     margin: 0; /* Ensures there is no default margin interfering with your layout */
     padding: 0; /* You can add this if you want to ensure no padding is affecting your layout */
 }
+/* Container for the widget and the screenshot */
 .tradingview-widget-container {
     position: absolute; /* or 'absolute' if you don't want it to stick during scroll */
     bottom: 0px;

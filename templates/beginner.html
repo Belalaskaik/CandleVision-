@@ -11,30 +11,50 @@
 
 
 </head>
+
 <body>
 
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "width": "800",
-  "height": "500",
-  "symbol": "NASDAQ:AAPL",
-  "interval": "5",
-  "timezone": "Etc/UTC",
-  "theme": "light",
-  "style": "1",
-  "locale": "en",
-  "enable_publishing": false,
-  "allow_symbol_change": false,
-  "save_image": true,
-  "calendar": false,
-  "support_host": "https://www.tradingview.com"
-}
-  </script>
-</div>
+  <!-- TradingView Widget BEGIN -->
+  <div class="tradingview-widget-container" >
+    <div class="tradingview-widget-container__widget" ></div>
+
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+        "width": "800",
+        "height": "500",
+        "symbol": "NASDAQ:AAPL",
+        "interval": "1",
+        "timezone": "Etc/UTC",
+        "theme": "light",
+        "style": "1",
+        "locale": "en",
+        "enable_publishing": false,
+        "allow_symbol_change": false,
+        "save_image": true,
+        "calendar": false,
+        "support_host": "https://www.tradingview.com"
+      }
+      </script>
+  </div>
 <!-- TradingView Widget END -->
+<button id="screenshotButton">Take Screenshot</button>
+<img id="screenshotDisplay" alt="Screenshot will be displayed here">
+<script>
+  document.getElementById('screenshotButton').addEventListener('click', function() {
+      fetch("/screenshot")
+      .then(response => {
+          if (response.ok) return response.blob();
+          throw new Error('Screenshot failed.');
+      })
+      .then(blob => {
+          const url = URL.createObjectURL(blob);
+          document.getElementById('screenshotDisplay').src = url;
+      })
+      .catch(error => console.error('Error:', error));
+  });
+  </script>
+
 </body>
 </html>
