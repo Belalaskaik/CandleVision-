@@ -180,25 +180,6 @@ Example:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Undecided Yet....
-Technology Stack
-
-- Data Ingestion: Yahoo finance API, X, News medias
-
-- Visualizing Data: TradingView API, Pine Script™ v5, Python (Plotly, Matplotlib, statsmodel)
-
-- Processing Data: Panda and Numpy may be used to manage data and clean up 
-
-- Google Colab GPUs: Ideal for computationally intensive tasks like training machine learning models due to high-performance GPUs.
-
-- Local Jupyter Notebook: Suitable for data exploration, preprocessing, and algorithm development.
-
-Machine Learning Libraries:
-
--TensorFlow or PyTorch for developing, training, and evaluating machine learning models.
-
--Scikit-learn for basic machine learning tasks and data preprocessing.
-
 Software Development:
 
 <!-- MARKDOWN LINKS & IMAGES -->
