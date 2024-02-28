@@ -73,9 +73,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 #### Environment Setup
-```python install -m venv venv```
-  
-```.venv\Scripts\activate   ``` 
+
 
 #### Installation
 1. Get a free API Key at

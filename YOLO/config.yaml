@@ -1,0 +1,13 @@
+path: /Users/belal/Desktop/spring 2024/CandleVisionGit/CandleVision-/YOLO
+train: images/train
+val: images/train
+
+#Classes:
+names:
+  0: bearish
+  1: bullish
+  2: doji
+  3: gravestone
+  4: inverted hammer
+  5: hanging man
+  6: hammer
