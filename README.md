@@ -57,7 +57,7 @@ Use the `README.md` to get started.
 This section lists any major frameworks/libraries used in our project (NEEDS UPDATE).
 
 Example:
-* [![Next][Next.js]][Next-url]
+* ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 * [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
@@ -74,6 +74,11 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 #### Environment Setup
 
+```python install -m venv venv```
+
+```python -m venv venv```
+
+```.venv\Scripts\activate   ``` 
 
 #### Installation
 1. Get a free API Key at
