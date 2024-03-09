@@ -9,16 +9,29 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="/static/style.css">
 
-
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
+      gap: 20px; /* Adds some space between grid items */
+      padding: 10px; /* Adds some padding around the grid */
+    }
+  
+    .widget, .screenshot {
+      /* Additional styling as needed */
+    }
+  </style>
+  
 </head>
 
 <body>
+  <button id="screenshotButton">Take Screenshot</button>
 
 <div class="grid-container">
 
   <!-- TradingView Widget BEGIN -->
   <div class="tradingview-widget-container" >
-    <div class="tradingview-widget-container__widget" ></div>
+    <div class="tradingview-widget-container__widget" >
 
     <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
 
@@ -39,10 +52,13 @@
         "support_host": "https://www.tradingview.com"
       }
       </script>
+      <div>
+<img id="screenshotDisplay" alt="Screenshot will be displayed here">
+</div>
   </div>
 <!-- TradingView Widget END -->
-<button id="screenshotButton">Take Screenshot</button>
-<img id="screenshotDisplay" alt="Screenshot will be displayed here">
+
+
 </div>
 <script>
   document.getElementById('screenshotButton').addEventListener('click', function() {
