@@ -14,6 +14,8 @@
 
 <body>
 
+<div class="grid-container">
+
   <!-- TradingView Widget BEGIN -->
   <div class="tradingview-widget-container" >
     <div class="tradingview-widget-container__widget" ></div>
@@ -25,7 +27,7 @@
         "width": "800",
         "height": "500",
         "symbol": "NASDAQ:AAPL",
-        "interval": "1",
+        "interval": "2",
         "timezone": "Etc/UTC",
         "theme": "light",
         "style": "1",
@@ -41,20 +43,28 @@
 <!-- TradingView Widget END -->
 <button id="screenshotButton">Take Screenshot</button>
 <img id="screenshotDisplay" alt="Screenshot will be displayed here">
+</div>
 <script>
   document.getElementById('screenshotButton').addEventListener('click', function() {
       fetch("/screenshot")
       .then(response => {
-          if (response.ok) return response.blob();
-          throw new Error('Screenshot failed.');
+          if (response.ok) return response.json();
+          throw new Error('Screenshot capture failed.');
       })
-      .then(blob => {
-          const url = URL.createObjectURL(blob);
-          document.getElementById('screenshotDisplay').src = url;
+      .then(data => {
+          if (data.message === "Screenshot taken successfully") {
+              // Append a cache-busting timestamp to the image URL
+              const timestamp = new Date().getTime();
+              const imageUrl = `/static/screenshots/screenshot.png?${timestamp}`;
+              document.getElementById('screenshotDisplay').src = imageUrl;
+          } else {
+              throw new Error('Failed to capture screenshot.');
+          }
       })
       .catch(error => console.error('Error:', error));
   });
   </script>
-
+  
+ 
 </body>
 </html>
