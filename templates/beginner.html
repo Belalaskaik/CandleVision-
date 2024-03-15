@@ -28,7 +28,17 @@
   <button id="screenshotButton">Take Screenshot</button>
 
 <div class="grid-container">
-
+    <!-- Image Upload Form -->
+    <div class="widget">
+      <h3>Upload an Image for Object Detection</h3>
+      <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*">
+        <button type="submit" class="btn btn-primary">Detect Objects</button>
+      </form>
+      <div id="detectionResults" class="mt-3"></div>
+    </div>
+  
+  
   <!-- TradingView Widget BEGIN -->
   <div class="tradingview-widget-container" >
     <div class="tradingview-widget-container__widget" >
@@ -40,7 +50,7 @@
         "width": "800",
         "height": "500",
         "symbol": "NASDAQ:AAPL",
-        "interval": "2",
+        "interval": "60",
         "timezone": "Etc/UTC",
         "theme": "light",
         "style": "1",
@@ -49,6 +59,7 @@
         "allow_symbol_change": false,
         "save_image": true,
         "calendar": false,
+        "hide_volume": true,
         "support_host": "https://www.tradingview.com"
       }
       </script>
@@ -61,6 +72,21 @@
 
 </div>
 <script>
+  document.getElementById('upload-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+    let response = await fetch('/detect/', {
+        method: 'POST',
+        body: formData,
+    });
+    if (response.ok) {
+        let result = await response.json();
+        document.getElementById('detectionResults').innerHTML = `<img src="data:image/jpeg;base64,${result.image}" class="img-fluid"/>`;
+    } else {
+        alert('Error: ' + response.statusText);
+    }
+  });
+  
   document.getElementById('screenshotButton').addEventListener('click', function() {
       fetch("/screenshot")
       .then(response => {
@@ -80,7 +106,6 @@
       .catch(error => console.error('Error:', error));
   });
   </script>
-  
- 
+
 </body>
 </html>

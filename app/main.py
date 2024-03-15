@@ -16,7 +16,19 @@ from pathlib import Path
 from pyppeteer import launch
 import pyppdf.patch_pyppeteer
 import sys
+import cv2
+import numpy as np
+from ultralytics import YOLO
 from concurrent.futures import ThreadPoolExecutor
+from fastapi import File, UploadFile
+import io
+import base64
+from fastapi.responses import FileResponse
+from fastapi.responses import JSONResponse
+
+
+model = YOLO("train9/weights/best.pt")
+
 
 
 if sys.platform == 'win32':
@@ -25,8 +37,40 @@ if sys.platform == 'win32':
 
 app = FastAPI()
 
+templates = Jinja2Templates(directory="templates")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+
+@app.post("/detect/")
+async def detect_objects(file: UploadFile):
+    try:
+        # Convert the uploaded file to a NumPy array
+        contents = await file.read()
+        nparr = np.frombuffer(contents, np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        
+        # Perform object detection
+        results = model.predict(image)
+        
+        # If the results have a 'render' method, use it to draw the detection results on the image
+        if hasattr(results, 'render'):
+            for img in results.render():
+                image = img
+        
+        # Convert the processed image back to a format suitable for web (JPEG or PNG)
+        _, buffer = cv2.imencode('.jpg', image)
+        
+        # Encode the image buffer to base64
+        encoded_image = base64.b64encode(buffer).decode("utf-8")
+        
+        # Return the base64 encoded image
+        return JSONResponse(content={"image": encoded_image})
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Add more detailed logging
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 def run_capture_script():
     # Assuming the capture script is located at a specific path
@@ -35,6 +79,11 @@ def run_capture_script():
         return result.stdout
     else:
         raise Exception(f"Script error: {result.stderr}")
+
+
+@app.get("/show-results", response_class=FileResponse)
+async def show_results():
+    return "prediction.html"  # Replace with the path to your HTML file
 
 @app.get("/screenshot")
 async def screenshot():
@@ -49,56 +98,6 @@ async def screenshot():
         except Exception as e:
             return {"error": str(e)}
 
-# @app.get("/screenshot")
-# async def take_screenshot(background_tasks: BackgroundTasks):
-#     # Use a background task to not block the API while taking the screenshot
-#     background_tasks.add_task(run_capture_script)
-#     return FileResponse(SCREENSHOT_PATH)
-
-
-# PROJECT_ROOT = Path(__file__).parent
-# CAPTURE_SCRIPT_PATH = PROJECT_ROOT / 'capture.js'
-
-
-# async def run_capture_script():
-#     try:
-#         # Run the capture.js script asynchronously
-#         process = await asyncio.create_subprocess_exec(
-#             'node', str(CAPTURE_SCRIPT_PATH),
-#             stdout=asyncio.subprocess.PIPE,
-#             stderr=asyncio.subprocess.PIPE,
-#             cwd=str(PROJECT_ROOT))  # Set the working directory to your project root
-#         stdout, stderr = await process.communicate()
-#         if process.returncode != 0:
-#             print(f"Capture script exited with error: {stderr.decode()}")
-#         else:
-#             print(f"Screenshot captured successfully. Output:\n{stdout.decode()}")
-#     except Exception as e:
-#         print(f"Error executing capture script: {e}")
-
-# @app.get("/screenshot")
-# async def take_screenshot():
-#     # Await the completion of the screenshot capture
-#     await run_capture_script()
-#     # Once the capture is complete, return the new screenshot
-#     return FileResponse(SCREENSHOT_PATH)
-# # C:\Users\belal\Desktop\spring 2024\CandleVisionGit\CandleVision-\capture.js
-# @app.get("/execute-script")
-# async def execute_script():
-#     # Construct an absolute path to the script.js file
-#     script_path = "C:\\Users\\belal\\Desktop\\spring 2024\\CandleVisionGit\\CandleVision-\\capture.js"
-
-#     try:
-#         # Ensure 'node' command is available & the path to script.js is correct
-#         result = subprocess.run(['node', script_path], capture_output=True, text=True, check=True)
-#         return {"message": "Script executed successfully", "script_output": result.stdout}
-#     except subprocess.CalledProcessError as e:
-#         return {"error": "Script execution failed", "message": e.stderr}
-#     except FileNotFoundError:
-#         return {"error": "Node.js is not installed or script.js not found"}
-templates = Jinja2Templates(directory="templates")
-
-
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -108,7 +107,3 @@ async def read_root(request: Request):
 @app.get("/beginner", response_class=HTMLResponse)
 async def read_beginner(request: Request):
     return templates.TemplateResponse("beginner.html", {"request": request})
-
-
-
-
