@@ -17,24 +17,17 @@
       padding: 10px; /* Adds some padding around the grid */
     }
   
-    .widget, .screenshot {
-      /* Additional styling as needed */
-    }
+    .widget, .screenshot {}
   </style>
   
 </head>
 
 <body>
-  <button id="screenshotButton">Take Screenshot</button>
+  <button id="detectButton">Detect</button>
 
 <div class="grid-container">
     <!-- Image Upload Form -->
     <div class="widget">
-      <h3>Upload an Image for Object Detection</h3>
-      <form id="upload-form" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*">
-        <button type="submit" class="btn btn-primary">Detect Objects</button>
-      </form>
       <div id="detectionResults" class="mt-3"></div>
     </div>
   
@@ -48,13 +41,14 @@
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
         {
         "width": "800",
-        "height": "500",
-        "symbol": "NASDAQ:AAPL",
-        "interval": "60",
+        "height": "600",
+        "symbol": "AMEX:SPY",
+        "interval": "M",
         "timezone": "Etc/UTC",
         "theme": "light",
         "style": "1",
         "locale": "en",
+        "hide_top_toolbar": false,
         "enable_publishing": false,
         "allow_symbol_change": false,
         "save_image": true,
@@ -72,40 +66,36 @@
 
 </div>
 <script>
-  document.getElementById('upload-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    let formData = new FormData(this);
-    let response = await fetch('/detect/', {
-        method: 'POST',
-        body: formData,
-    });
-    if (response.ok) {
-        let result = await response.json();
-        document.getElementById('detectionResults').innerHTML = `<img src="data:image/jpeg;base64,${result.image}" class="img-fluid"/>`;
-    } else {
-        alert('Error: ' + response.statusText);
+  document.getElementById('detectButton').addEventListener('click', async function() {
+    try {
+      // Take Screenshot
+      let screenshotResponse = await fetch("/screenshot");
+      let screenshotData = await screenshotResponse.json();
+      if (screenshotData.message !== "Screenshot taken successfully") {
+        throw new Error('Screenshot capture failed.');
+      }
+
+      // Crop Screenshot
+      const filename = "screenshot.png"; // This would need to be dynamic if filenames change
+      let cropResponse = await fetch(`/crop-screenshot/${filename}`, { method: 'POST' });
+      let cropData = await cropResponse.json();
+
+      // Detect objects
+      let detectResponse = await fetch('/detect/', { method: 'POST' });
+      let detectData = await detectResponse.json();
+      if (detectResponse.ok) {
+        document.getElementById('screenshotDisplay').src = `data:image/jpeg;base64,${detectData.image}`;
+      } else {
+        throw new Error('Detection failed: ' + detectData.detail);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error: ' + error.message);
     }
   });
+
   
-  document.getElementById('screenshotButton').addEventListener('click', function() {
-      fetch("/screenshot")
-      .then(response => {
-          if (response.ok) return response.json();
-          throw new Error('Screenshot capture failed.');
-      })
-      .then(data => {
-          if (data.message === "Screenshot taken successfully") {
-              // Append a cache-busting timestamp to the image URL
-              const timestamp = new Date().getTime();
-              const imageUrl = `/static/screenshots/screenshot.png?${timestamp}`;
-              document.getElementById('screenshotDisplay').src = imageUrl;
-          } else {
-              throw new Error('Failed to capture screenshot.');
-          }
-      })
-      .catch(error => console.error('Error:', error));
-  });
-  </script>
+</script>
 
 </body>
 </html>
