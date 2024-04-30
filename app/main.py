@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import FileResponse
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from bs4 import BeautifulSoup
 from fastapi.staticfiles import StaticFiles
 from requests_html import AsyncHTMLSession
 from fastapi import HTTPException
@@ -27,6 +26,11 @@ from fastapi.responses import JSONResponse
 import time
 import glob
 from ultralytics.utils.plotting import Annotator, colors
+from twilio.rest import Client
+from pydantic import BaseModel
+from typing import List
+
+
 
 
 
@@ -43,6 +47,35 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+
+class DetectionResult(BaseModel):
+    image: str
+    patterns: List[str] 
+
+class SmsRequest(BaseModel):
+    detected_pattern_name: str
+
+
+@app.post("/send-sms/")
+async def send_sms(request_data: SmsRequest):
+    account_sid = 'AC112ad13e45d59d15ab6f16504e06aad9'
+    auth_token = '0d9445278c693d18be5008cd4e77b35c'
+
+    client = Client(account_sid, auth_token)
+    
+    try:
+        sms_body = f"Pattern Detected: {request_data.detected_pattern_name}"
+
+        message = client.messages.create(
+            from_='+18889912962',  # Twilio number
+            body=sms_body,  # The message body
+            to='+18777804236'  # Number to send the SMS to
+        )
+        return {"message": "SMS sent successfully", "sid": message.sid}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 def crop_image(image_path, save_path):
@@ -136,10 +169,12 @@ async def detect_objects():
         with open(output_image_path, "rb") as image_file:
             image_data = image_file.read()
 
+        patterns = [model.names[int(cls)] for cls in clss]  # Convert class IDs to pattern names
+
         # Encode the image buffer to base64 to send as JSON
         encoded_image = base64.b64encode(image_data).decode("utf-8")
 
-        return JSONResponse(content={"image": encoded_image})
+        return DetectionResult(image=encoded_image, patterns=patterns)
     except Exception as e:
         print(f"Error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
