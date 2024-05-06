@@ -1,12 +1,74 @@
-html, body {
-    height: 100%;
-    margin: 0; /* Remove default margin */
-}
 body {
+    font-family: 'Inter', sans-serif;
     display: flex;
-    align-items: center; /* This centers the content vertically */
-    justify-content: center; /* This centers the content horizontally */
-    flex-direction: column; /* This stacks the content vertically */
-    margin: 0; /* Ensures there is no default margin interfering with your layout */
-    padding: 0; /* You can add this if you want to ensure no padding is affecting your layout */
-}
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 30px;
+    margin: 0;
+    color: #224;
+    background: url('https://source.unsplash.com/E8Ufcyxz514/2400x1823') center / cover no-repeat fixed;
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+  }
+  
+  .nav-link {
+    color: #007bff;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .card {
+    width: 70%; /* Adjust width as necessary */
+    height: 600px;
+    padding: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(15px);
+    margin-bottom: 20px; /* Space between card and button */
+  }
+  
+  #detectButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.6);
+  }
+  
+  #detectButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .tradingview-widget-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  

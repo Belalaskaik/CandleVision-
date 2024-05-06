@@ -11,8 +11,6 @@ import shutil
 import os
 import asyncio
 from pathlib import Path
-from pyppeteer import launch
-import pyppdf.patch_pyppeteer
 import sys
 import cv2
 import numpy as np
@@ -29,13 +27,15 @@ from ultralytics.utils.plotting import Annotator, colors
 from twilio.rest import Client
 from pydantic import BaseModel
 from typing import List
-
+from fastapi.middleware.cors import CORSMiddleware
+import requests
 
 
 
 
 model = YOLO("train9/weights/best.pt")
-
+API_KEY ="MSOGTFCDJCZDCMRU"
+API_URL = "https://www.alphavantage.co/query"
 
 
 if sys.platform == 'win32':
@@ -44,10 +44,64 @@ if sys.platform == 'win32':
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="templates")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Specify domains for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+templates = Jinja2Templates(directory="templates")
+
+
+class StockDataResponse(BaseModel):
+    symbol: str
+    last_price: float
+    previous_close_price: float
+    trend: str
+
+def fetch_stock_price_change(symbol: str):
+    """
+    Fetches the most recent closing price and the closing price from 24 hours ago.
+    """
+    params = {
+        "function": "TIME_SERIES_INTRADAY",
+        "symbol": symbol,
+        "interval": "60min",
+        "apikey": API_KEY,
+        "outputsize": "compact"  # Use 'full' for more historical data
+    }
+    response = requests.get(API_URL, params=params)
+    data = response.json()
+    if "Time Series (60min)" not in data:
+        return None
+
+    # Process the data
+    time_series = data["Time Series (60min)"]
+    sorted_times = sorted(time_series.keys())
+    last_close = float(time_series[sorted_times[-1]]["4. close"])
+    prev_close = float(time_series[sorted_times[-25]]["4. close"]) if len(sorted_times) > 24 else last_close
+
+    # Determine trend
+    trend = "bullish" if last_close > prev_close else "bearish" if last_close < prev_close else "neutral"
+
+    return StockDataResponse(
+        symbol=symbol,
+        last_price=last_close,
+        previous_close_price=prev_close,
+        trend=trend
+    )
+
+@app.get("/api/stock/{symbol}", response_model=StockDataResponse)
+async def get_stock_data(symbol: str):
+    stock_data = fetch_stock_price_change(symbol)
+    if stock_data:
+        return stock_data
+    else:
+        raise HTTPException(status_code=404, detail="Stock data not found")
 
 
 class DetectionResult(BaseModel):
@@ -58,11 +112,27 @@ class SmsRequest(BaseModel):
     detected_pattern_name: str
 
 
+
+@app.get("/stock-tug-of-war", response_class=HTMLResponse)
+async def stock_tug_of_war(request: Request):
+    return templates.TemplateResponse("stock_tug_of_war.html", {"request": request})
+
+@app.get("/api/stock/{symbol}")
+async def get_stock_data(symbol: str):
+    try:
+        # Your existing function to fetch stock data
+        stock_data = fetch_stock_price_change(symbol)
+        if stock_data:
+            return stock_data
+        else:
+            raise HTTPException(status_code=404, detail="Stock data not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/send-sms/")
 async def send_sms(request_data: SmsRequest):
     account_sid = 'AC112ad13e45d59d15ab6f16504e06aad9'
-    auth_token = '0d9445278c693d18be5008cd4e77b35c'
-
+    auth_token = '2b07983d8e4347648737ae0de00d5542'
     client = Client(account_sid, auth_token)
     
     try:
@@ -101,7 +171,7 @@ def crop_image(image_path, save_path):
     # Adjusted to crop the right side of the image
     x1 = width // 2       # Start from the middle of the width
     y1 = 98               # Start from the top edge of the image
-    x2 = width - 90       # End at the right edge of the image
+    x2 = width - 70      # End at the right edge of the image
     y2 = height - 80      # End at the bottom edge of the image
 
     # Crop the image to the defined ROI
@@ -210,7 +280,7 @@ async def screenshot():
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("home.html", {"request": request})
+    return templates.TemplateResponse("beginner.html", {"request": request})
 
 @app.get("/beginner", response_class=HTMLResponse)
 async def read_beginner(request: Request):

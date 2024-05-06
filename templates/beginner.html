@@ -4,98 +4,401 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beginner</title>
-  <!-- Bootstrap CSS -->  
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="/static/style.css">
-
-  <style>
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
-      gap: 20px; /* Adds some space between grid items */
-      padding: 10px; /* Adds some padding around the grid */
+</head>
+<style> 
+  #tape{
+    position: absolute;
+    top: 0;
+  }
+  .content {
+    display: flex;
+    justify-content: center; /* Horizontally centers the content */
+    align-items: center;     /* Vertically centers the content */
+    flex-wrap: nowrap;       /* Prevents wrapping of items */
+    gap: 20px;               /* Adds space between the cards */
+  }
+    
+  body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 30px;
+    margin: 0;
+    color: #224;
+    background: url('https://source.unsplash.com/E8Ufcyxz514/2400x1823') center / cover no-repeat fixed;
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+  }
+  
+  .nav-link {
+    color: #007bff;
+  }
+  
+  
+  .card {
+    display: flex;
+    flex-direction: column; /* Aligns children vertically */
+    align-items: center;    /* Centers children horizontally */
+    justify-content: center;/* Centers children vertically */
+    width: 850px;            /* Adjusted from 120% to 100% */
+    height: 650px;
+    padding: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(15px);
+    margin-bottom: 20px;    /* Space between card and button */
     }
   
-    .widget, .screenshot {}
-  </style>
+  #detectButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.6);
+  }
   
-</head>
+  #detectButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .tradingview-widget-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* This can help if content overflows */
 
+  }
+  .card2 {
+    display: flex;
+    flex-direction: column; /* Aligns children vertically */
+    align-items: center;    /* Centers children horizontally */
+    justify-content: center;/* Centers children vertically */
+    width: 130%%;            /* Adjusted from 120% to 100% */
+    height: 100%%;
+    padding: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(15px);
+    margin-bottom: 20px;    /* Space between card and button */
+
+    overflow: hidden; 
+  }
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .rope-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 600px;
+    height: 50px;
+    padding: 10px 20px; /* Padding for aesthetic spacing */
+    background-color: #ddd;
+    border-radius: 25px;
+    margin-top: 20px;
+    overflow: hidden; /* Ensures nothing spills outside the container */
+  }
+  #dollar {
+    position: absolute;
+    font-size: 2rem;
+    transition: transform 1s ease-in-out;
+  }
+  .emoji {
+    position: absolute;
+    font-size: 2rem; /* Larger emojis for better visibility */
+  }
+  .bear {
+    right: 0; 
+  }
+  .bull {
+    left: 0;
+  }
+  .center {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+</style>
 <body>
-  <button id="detectButton">Detect</button>
 
-<div class="grid-container">
-    <!-- Image Upload Form -->
-    <div class="widget">
-      <div id="detectionResults" class="mt-3"></div>
-    </div>
-  
-  
   <!-- TradingView Widget BEGIN -->
-  <div class="tradingview-widget-container" >
-    <div class="tradingview-widget-container__widget" >
-
-    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-        {
-        "width": "800",
-        "height": "600",
-        "symbol": "AMEX:SPY",
-        "interval": "M",
-        "timezone": "Etc/UTC",
-        "theme": "light",
-        "style": "1",
-        "locale": "en",
-        "hide_top_toolbar": false,
-        "enable_publishing": false,
-        "allow_symbol_change": false,
-        "save_image": true,
-        "calendar": false,
-        "hide_volume": true,
-        "support_host": "https://www.tradingview.com"
-      }
-      </script>
-      <div>
-<img id="screenshotDisplay" alt="Screenshot will be displayed here">
+<div class="tradingview-widget-container" id=tape>
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "FOREXCOM:SPXUSD",
+      "title": "S&P 500 Index"
+    },
+    {
+      "proName": "BITSTAMP:BTCUSD",
+      "title": "Bitcoin"
+    },
+    {
+      "proName": "BITSTAMP:ETHUSD",
+      "title": "Ethereum"
+    },
+    {
+      "description": "Tesla",
+      "proName": "NASDAQ:TSLA"
+    },
+    {
+      "description": "Apple",
+      "proName": "NASDAQ:AAPL"
+    },
+    {
+      "description": "Nvidia ",
+      "proName": "NASDAQ:NVDA"
+    },
+    {
+      "description": "Microsoft",
+      "proName": "NASDAQ:MSFT"
+    },
+    {
+      "description": "Amazon",
+      "proName": "NASDAQ:AMZN"
+    },
+    {
+      "description": "AMD",
+      "proName": "NASDAQ:AMD"
+    },
+    {
+      "description": "Meta",
+      "proName": "NASDAQ:META"
+    },
+    {
+      "description": "Google",
+      "proName": "NASDAQ:GOOGL"
+    },
+    {
+      "description": "Netflix",
+      "proName": "NASDAQ:NFLX"
+    },
+    {
+      "description": "Coin",
+      "proName": "NASDAQ:COIN"
+    }
+  ],
+  "showSymbolLogo": false,
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "colorTheme": "dark",
+  "locale": "en"
+}
+  </script>
 </div>
-  </div>
+
+
 <!-- TradingView Widget END -->
 
 
+<div class="rope-container">
+  <div class="emoji bull">🐂</div>
+  <div class="emoji dollar" id="dollar">💰</div>
+  <div class="emoji bear">🐻</div>
 </div>
-<script>
-  document.getElementById('detectButton').addEventListener('click', async function() {
-    try {
-      // Take Screenshot
-      let screenshotResponse = await fetch("/screenshot");
-      let screenshotData = await screenshotResponse.json();
-      if (screenshotData.message !== "Screenshot taken successfully") {
-        throw new Error('Screenshot capture failed.');
-      }
 
-      // Crop Screenshot
-      const filename = "screenshot.png"; // This would need to be dynamic if filenames change
-      let cropResponse = await fetch(`/crop-screenshot/${filename}`, { method: 'POST' });
-      let cropData = await cropResponse.json();
+<button onclick="checkStockTrend('AAPL')" class="btn btn-primary mt-3">Check AAPL Trend</button>
 
-      // Detect objects
-      let detectResponse = await fetch('/detect/', { method: 'POST' });
-      let detectData = await detectResponse.json();
-      if (detectResponse.ok) {
-        document.getElementById('screenshotDisplay').src = `data:image/jpeg;base64,${detectData.image}`;
-      } else {
-        throw new Error('Detection failed: ' + detectData.detail);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error: ' + error.message);
-    }
-  });
+    <div class="content">
+    <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+  {
+  "interval": "1m",
+  "width": "300",
+  "isTransparent": false,
+  "height": "400",
+  "symbol": "NASDAQ:AAPL",
+  "showIntervalTabs": true,
+  "displayMode": "single",
+  "locale": "en",
+  "colorTheme": "dark"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
 
-  
-</script>
 
+      <div class="card">
+        <label for="intervalSelect">Choose an interval:</label>
+        <select id="intervalSelect" onchange="updateWidget(this.value)">
+            <option value="1">1 Minute</option>
+            <option value="5">5 Minutes</option>
+            <option value="H">1 Hour</option>
+            <option value="D">1 Day</option>
+        </select>
+    
+        <div class="tradingview-widget-container" id="tradingview-widget">
+          <div class="tradingview-widget-container__widget" >
+
+        
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                "width": "800",
+                "height": "600",
+                "symbol": "AMEX:SPY",
+                "interval": "5",
+                "timezone": "Etc/UTC",
+                "theme": "light",
+                "style": "1",
+                "locale": "en",
+                "hide_top_toolbar": false,
+                "enable_publishing": false,
+                "allow_symbol_change": false,
+                "save_image": true,
+                "calendar": false,
+                "hide_volume": true,
+                "support_host": "https://www.tradingview.com"
+              }
+              </script>
+              </div>
+          </div>
+          
+
+      </div>
+      <div class="card2">
+        <img id="screenshotDisplay" alt="Screenshot will be displayed here">
+      </div>
+      <!-- Detection Button -->
+    </div>
+    <button id="detectButton">Detect</button>
+
+
+
+
+
+    <!-- JavaScript files -->
+        <script>
+          function updateWidget(interval) {
+            // Locate the container where the TradingView widget is to be embedded
+            const container = document.getElementById('tradingview-widget');
+            
+            // Clear the container to remove the previous widget instance
+            container.innerHTML = '';
+          
+            // Create a new script element for the TradingView widget
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+          
+            // Create a configuration object with all required properties
+            const config = {
+                "width": 800,
+                "height": 600,
+                "symbol": "AMEX:SPY",
+                "interval": interval, // Set interval dynamically based on user selection
+                "timezone": "Etc/UTC",
+                "theme": "light",
+                "style": "1",
+                "locale": "en",
+                "hide_top_toolbar": false,
+                "enable_publishing": false,
+                "allow_symbol_change": false,
+                "save_image": true,
+                "calendar": false,
+                "hide_volume": true,
+                "container_id": "tradingview-widget",
+                "support_host": "https://www.tradingview.com"
+            };
+          
+            // Append configuration data as JSON within the script
+            script.innerHTML = JSON.stringify(config);
+          
+            // Append the newly created script to the container
+            container.appendChild(script);
+          }
+          
+          // Call this function to initially load the widget with a default interval
+          updateWidget('H');  // Set default interval as 5 minutes
+          
+      document.getElementById('detectButton').addEventListener('click', async function() {
+        try {
+          // Take Screenshot
+          let screenshotResponse = await fetch("/screenshot");
+          let screenshotData = await screenshotResponse.json();
+          if (screenshotData.message !== "Screenshot taken successfully") {
+            throw new Error('Screenshot capture failed.');
+          }
+    
+          // Crop Screenshot
+          const filename = "screenshot.png";
+          let cropResponse = await fetch(`/crop-screenshot/${filename}`, { method: 'POST' });
+          let cropData = await cropResponse.json();
+          // Detect objects
+          let detectResponse = await fetch('/detect/', { method: 'POST' });
+          let detectData = await detectResponse.json();
+          if (detectResponse.ok && detectData.image) {
+            document.getElementById('screenshotDisplay').src = `data:image/jpeg;base64,${detectData.image}`;
+    
+            if (detectData.patterns && detectData.patterns.length > 0) {
+              // Join all detected patterns into a single string
+              let detectedPatternName = detectData.patterns.join(', ');
+              console.log(detectedPatternName)
+    
+              // Call the send-sms endpoint if detections were made
+              let smsResponse = await fetch('/send-sms/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                  detected_pattern_name: detectedPatternName
+                })
+              });
+    
+              if (!smsResponse.ok) {
+                const errorData = await smsResponse.json();
+                console.error('SMS Notification Error:', errorData);
+                throw new Error('SMS notification failed: ' + JSON.stringify(errorData));
+              }
+    
+              const responseData = await smsResponse.json();
+              console.log('SMS Response:', responseData);
+              alert(`SMS sent! Message SID: ${responseData.sid}`);
+            } else {
+              console.log("No patterns detected.");
+            }
+          } else {
+            throw new Error('Detection failed: ' + detectData.detail);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Error: ' + error.message);
+        }
+      });
+    
+    </script>
+    <script src="/static/scripts.js"></script>
 </body>
 </html>
