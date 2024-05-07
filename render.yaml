@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: fastapi-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    disk:
+      name: fastapi-storage
+      mountPath: /app/storage
+      sizeGB: 1
+    regions:
+      - region: frankfurt
+  - type: web
+    name: nodejs-service
+    env: node
+    buildCommand: npm install
+    startCommand: node capture.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PUPPETEER_SKIP_DOWNLOAD
+        value: "true"
+    regions:
+      - region: frankfurt
