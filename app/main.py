@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -16,19 +16,19 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 from concurrent.futures import ThreadPoolExecutor
-from fastapi import File, UploadFile
 import io
+from fastapi.middleware.cors import CORSMiddleware
 import base64
 from fastapi.responses import FileResponse
 from fastapi.responses import JSONResponse
 import time
-import glob
 from ultralytics.utils.plotting import Annotator, colors
 from twilio.rest import Client
 from pydantic import BaseModel
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+
 
 
 
@@ -46,11 +46,13 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Specify domains for production
+    allow_origins=["*"],  # Adjust this to more restrictive settings if necessary
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
+
+templates = Jinja2Templates(directory="templates")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -169,7 +171,7 @@ def crop_image(image_path, save_path):
 
     # Define the region of interest (ROI) coordinates
     # Adjusted to crop the right side of the image
-    x1 = width // 2       # Start from the middle of the width
+    x1 = 100      # Start from the middle of the width
     y1 = 98               # Start from the top edge of the image
     x2 = width - 70      # End at the right edge of the image
     y2 = height - 80      # End at the bottom edge of the image
