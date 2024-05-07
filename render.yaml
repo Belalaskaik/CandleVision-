@@ -11,8 +11,7 @@ services:
       name: fastapi-storage
       mountPath: /app/storage
       sizeGB: 1
-    regions:
-      - region: frankfurt
+
   - type: web
     name: nodejs-service
     env: node
@@ -23,5 +22,4 @@ services:
         value: production
       - key: PUPPETEER_SKIP_DOWNLOAD
         value: "true"
-    regions:
-      - region: frankfurt
+
