@@ -1,0 +1,85 @@
+[
+    {
+        "name": "Bullish Engulfing",
+        "description": "A bullish engulfing pattern occurs after a downtrend, where the body of a larger green candle completely engulfs the body of the preceding smaller red candle.",
+        "image_url": "static/candlesticks/BullsihEngulfing.png"
+    },
+    {
+        "name": "Bearish Engulfing",
+        "description": "A bearish engulfing pattern occurs during an uptrend, where the body of a larger red candle completely engulfs the body of the preceding smaller green candle.",
+        "image_url": "static/candlesticks/BullsihEngulfing.png"
+    },
+    {
+        "name": "Doji",
+        "description": "A Doji pattern shows indecision in the market, with the opening and closing prices almost the same, resulting in a small body and long shadows.",
+        "image_url": "static/candlesticks/Doji.png"
+    },
+    {
+        "name": "Morning Star",
+        "description": "A Morning Star is a bullish reversal pattern appearing after a downtrend. It consists of three candles: a large bearish candle, a small indecisive candle (often a Doji), and a large bullish candle.",
+        "image_url": "static/candlesticks/MorningStar.png"
+    },
+    {
+        "name": "Evening Star",
+        "description": "An Evening Star is a bearish reversal pattern found after an uptrend. It consists of three candles: a large bullish candle, a small indecisive candle (often a Doji), and a large bearish candle.",
+        "image_url": "static/candlesticks/EveningStar.png"
+    },
+    {
+        "name": "Hammer",
+        "description": "A Hammer pattern is a bullish reversal pattern after a downtrend, with a long lower wick and a small body at the top, showing strong rejection of lower prices.",
+        "image_url": "static/candlesticks/Hammer.png"
+    },
+    {
+        "name": "Shooting Star",
+        "description": "A Shooting Star is a bearish reversal pattern occurring at the top of an uptrend. It has a long upper wick and a small body at the bottom, indicating a rejection of higher prices.",
+        "image_url": "static/candlesticks/ShootingStar.png"
+    },
+    {
+        "name": "Spinning Top",
+        "description": "A Spinning Top pattern reflects market indecision, characterized by a small body in the middle with long upper and lower shadows.",
+        "image_url": "static/candlesticks/SpinningTop.png"
+    },
+    {
+        "name": "Inverted Hammer",
+        "description": "An Inverted Hammer is a bullish reversal pattern found at the bottom of a downtrend. It has a long upper wick and a small body at the bottom, indicating rejection of lower prices.",
+        "image_url": "static/candlesticks/inverted hammer.png"
+    },
+    {
+        "name": "3 Soldiers",
+        "description": "The Three White Soldiers is a bullish reversal pattern consisting of three consecutive green candles, each closing progressively higher.",
+        "image_url": "static/candlesticks/3Soldiers.png"
+    },
+    {
+        "name": "3 Crows",
+        "description": "The Three Black Crows is a bearish reversal pattern consisting of three consecutive red candles, each closing progressively lower.",
+        "image_url": "static/candlesticks/3Crows.png"
+    },
+    {
+        "name": "Dragonfly Doji",
+        "description": "A Dragonfly Doji is a reversal pattern that occurs when the opening and closing prices are the same, with a long lower shadow and no upper shadow.",
+        "image_url": "static/candlesticks/Dragonfly Doji.png"
+    },
+    {
+        "name": "Gravestone Doji",
+        "description": "A Gravestone Doji is a reversal pattern that occurs when the opening and closing prices are the same, with a long upper shadow and no lower shadow.",
+        "image_url": "static/candlesticks/gravestone_doji.png"
+    },
+    {
+        "name": "Hammer Pattern",
+        "description": "A Hammer is a bullish reversal pattern with a long lower wick and a small body at the top, indicating a rejection of lower prices.",
+        "image_url": "static/candlesticks/Hammer.png"
+    },
+
+    {
+        "name": "Inverted Hammer Pattern",
+        "description": "An Inverted Hammer is a bullish reversal pattern found at the bottom of a downtrend. It has a long upper wick and a small body at the bottom, suggesting a rejection of lower prices.",
+        "image_url": "static/candlesticks/inverted hammer.png"
+
+    },
+    {
+        "name": "Inverted Hammer",
+        "description": "An Inverted Hammer is a bullish reversal pattern found at the bottom of a downtrend. It has a long upper wick and a small body at the bottom, suggesting a rejection of lower prices.",
+        "image_url": "static/candlesticks/inverted hammer.png"
+    }
+
+]

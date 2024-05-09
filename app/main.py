@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import FileResponse
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -16,20 +16,20 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 from concurrent.futures import ThreadPoolExecutor
+from fastapi import File, UploadFile
 import io
-from fastapi.middleware.cors import CORSMiddleware
 import base64
 from fastapi.responses import FileResponse
 from fastapi.responses import JSONResponse
 import time
+import glob
 from ultralytics.utils.plotting import Annotator, colors
 from twilio.rest import Client
 from pydantic import BaseModel
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 import requests
-
-
+import json 
 
 
 
@@ -46,13 +46,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this to more restrictive settings if necessary
+    allow_origins=["*"],  # Specify domains for production
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
-templates = Jinja2Templates(directory="templates")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -113,6 +111,11 @@ class DetectionResult(BaseModel):
 class SmsRequest(BaseModel):
     detected_pattern_name: str
 
+class CandlestickPattern(BaseModel):
+    name: str
+    description: str
+    image_url: str
+
 
 
 @app.get("/stock-tug-of-war", response_class=HTMLResponse)
@@ -134,7 +137,7 @@ async def get_stock_data(symbol: str):
 @app.post("/send-sms/")
 async def send_sms(request_data: SmsRequest):
     account_sid = 'AC112ad13e45d59d15ab6f16504e06aad9'
-    auth_token = '2b07983d8e4347648737ae0de00d5542'
+    auth_token = '5ea303f65777dd611c5c81b8d6432713'
     client = Client(account_sid, auth_token)
     
     try:
@@ -171,7 +174,7 @@ def crop_image(image_path, save_path):
 
     # Define the region of interest (ROI) coordinates
     # Adjusted to crop the right side of the image
-    x1 = 100      # Start from the middle of the width
+    x1 = 100       # Start from the middle of the width
     y1 = 98               # Start from the top edge of the image
     x2 = width - 70      # End at the right edge of the image
     y2 = height - 80      # End at the bottom edge of the image
@@ -202,7 +205,7 @@ async def crop_screenshot(filename: str):
     return JSONResponse(content={"url": url_to_cropped_image})
 
 
-
+patterns: List[CandlestickPattern] = []
 @app.post("/detect/")
 async def detect_objects():
     try:
@@ -214,7 +217,7 @@ async def detect_objects():
         output_image_path = f"{detection_dir}result.png"
 
         # Perform inference on the test image
-        results = model.predict(input_image_path, conf=0.5)
+        results = model.predict(input_image_path, conf=0.1)
 
         # Load the image for annotation
         img = cv2.imread(input_image_path)
@@ -250,6 +253,28 @@ async def detect_objects():
     except Exception as e:
         print(f"Error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+
+@app.on_event("startup")
+async def load_patterns():
+    global patterns
+    try:
+        with open("patterns.json", "r") as file:
+            patterns_data = json.load(file)
+            patterns = [CandlestickPattern(**pattern) for pattern in patterns_data]
+            print("Loaded patterns:", [pattern.dict() for pattern in patterns])  # Optional: to verify that patterns are loaded correctly
+    except Exception as e:
+        print(f"Failed to load patterns: {str(e)}")
+
+
+@app.get("/patterns/{pattern_name}", response_model=CandlestickPattern)
+async def get_pattern(pattern_name: str):
+    for pattern in patterns:
+        if pattern.name.lower() == pattern_name.lower():
+            return pattern
+    raise HTTPException(status_code=404, detail="Pattern not found")
+
 
 def run_capture_script():
     # Assuming the capture script is located at a specific path
