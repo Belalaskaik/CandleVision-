@@ -160,7 +160,7 @@ async def get_stock_data(symbol: str):
 @app.post("/send-sms/")
 async def send_sms(request_data: SmsRequest):
     account_sid = 'AC112ad13e45d59d15ab6f16504e06aad9'
-    auth_token = '5ea303f65777dd611c5c81b8d6432713'
+    auth_token = 'eb1800d54673714bb4773446ed5905ec    '
     client = Client(account_sid, auth_token)
     
     try:
