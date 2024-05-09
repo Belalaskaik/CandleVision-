@@ -1,3 +1,4 @@
+version: "1"
 services:
 - type: web
   name: nodejs-service
@@ -15,4 +16,3 @@ services:
     apt-get install -y chromium-browser &&
     npm install
   startCommand: node capture.js
-  version: "1"
