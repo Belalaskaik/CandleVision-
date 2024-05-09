@@ -7,7 +7,7 @@ const puppeteer = require('puppeteer');
   // Set a higher resolution for the viewport
   await page.setViewport({ width: 3840, height: 2160, deviceScaleFactor: 1.5 }); // Increase deviceScaleFactor to zoom in
 
-  await page.goto('http://localhost:8000/', { waitUntil: 'networkidle2', timeout: 60000 });
+  await page.goto('https://fastapi-app-04xj.onrender.com', { waitUntil: 'networkidle2', timeout: 60000 });
 
   const chartSelector = '.tradingview-widget-container1';
   await page.waitForSelector(chartSelector);
