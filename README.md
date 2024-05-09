@@ -20,8 +20,8 @@ In our project, CandleVision, we plan to integrate computer vision and AI, empha
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#Software Development">Software Development</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -29,8 +29,6 @@ In our project, CandleVision, we plan to integrate computer vision and AI, empha
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 In our project, CandleVision, will utilize combination of advanced computer vision and detailed analysis of candlestick patterns with aims of simplify and improving trading decision-making. CandleVision is poised to demonstrate how AI and Machine learning can offer deeper insights and a more informed approach to analyzing financial markets.
 
@@ -122,7 +120,8 @@ Belal Skaik - [📫](scuf) - belalaskaik@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Software Development:
+
+#### Software Development
 
 📋 Languages:
 
