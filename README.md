@@ -41,7 +41,7 @@ In our project, CandleVision, will utilize combination of advanced computer visi
 
 Here's why:
 * New investor lack fundemental knowledge of candlesticks and market patterns
-* fundementals are key in identifying market movement
+* Fundementals are key in identifying market movement
 * Solid foundation will teach and prevent guessing the market and capital blowout
 
 Of course, this is not a funancial advising but just a tool to help investors!
@@ -53,9 +53,8 @@ Use the `README.md` to get started.
 
 ### Built With
 
-This section lists any major frameworks/libraries used in our project (NEEDS UPDATE).
-
 Software Development Tools:
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54), ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi), ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54), ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white), ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white), ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E), ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white), ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white), ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
 
@@ -79,13 +78,15 @@ To get a local copy up and running follow these simple example steps.
 
 #### Installation
 1. Clone the repo
-   ```sh
+   ```
    git clone https://github.com/midsu/CandleVision-.git
     or
    git clone https://github.com/Belalaskaik/CandleVision-.git
    ```
 2. Install requiements
-  ```pip install -r requirements.txt```
+  ```
+  pip install -r requirements.txt
+  ```
       
 #### Running the server:
   ```uvicorn app.main:app --reload```
