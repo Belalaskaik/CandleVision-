@@ -63,9 +63,15 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 #### Environment Setup
 
-```python -m venv venv```
+   - **Windows:**
+     ```bash
+     .\venv\Scripts\activate
+     ```
+   - **macOS and Linux:**
+     ```bash
+     source venv/bin/activate
+     ```
 
-```.venv\Scripts\activate   ``` 
 
 
 #### Installation
