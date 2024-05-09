@@ -1,6 +1,16 @@
 
 ## CandleVision
 
+<!-- CONTACT -->
+## Contact
+
+Hamid Suha - [📫](scuf) - hsuha@csu.fullerton.edu
+
+Belal Skaik - [📫](scuf) - belalaskaik@gmail.com
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 🔭 currently working on
 
 In our project, CandleVision, we plan to integrate computer vision and AI, emphasizing the importance of candlestick patterns in financial market analysis. By incorporating sentiment analysis, our goal is to provide a comprehensive and accessible understanding of market trends for traders of various skill levels. The combination of advanced computer vision and detailed analysis of candlestick patterns aims to simplify and improve trading decision-making. CandleVision is poised to demonstrate how AI can offer deeper insights and a more informed approach to analyzing financial markets.
@@ -107,16 +117,6 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/CandleVision-`)
 5. Open a Pull Request
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- CONTACT -->
-## Contact
-
-Hamid Suha - [📫](scuf) - hsuha@csu.fullerton.edu
-
-Belal Skaik - [📫](scuf) - belalaskaik@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
