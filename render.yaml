@@ -1,26 +1,16 @@
+# Exported from Render on 2024-05-09T06:02:55Z
 services:
-  - type: web
-    name: fastapi-app
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
-    envVars:
-      - key: PYTHONUNBUFFERED
-        value: "1"
-    disk:
-      name: fastapi-storage
-      mountPath: /app/storage
-      sizeGB: 1
-    region: oregon
-
-  - type: web
-    name: nodejs-service
-    env: node
-    buildCommand: npm install
-    startCommand: node capture.js
-    envVars:
-      - key: NODE_ENV
-        value: "production"
-      - key: PUPPETEER_SKIP_DOWNLOAD
-        value: "true"
-    region: oregon
+- type: web
+  name: nodejs-service
+  runtime: node
+  repo: https://github.com/Belalaskaik/CandleVision-
+  plan: starter
+  envVars:
+  - key: PUPPETEER_SKIP_DOWNLOAD
+    sync: false
+  - key: NODE_ENV
+    sync: false
+  region: oregon
+  buildCommand: npm install
+  startCommand: node capture.js
+version: "1"
