@@ -142,7 +142,7 @@ Don't forget to give the project a star! Thanks again!
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 
-📚 Frameworks, Platforms and Libraries:
+📚 Frameworks/ Libraries:
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white)
@@ -158,6 +158,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 🖥️ Editors:
+
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
 
