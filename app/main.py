@@ -33,6 +33,7 @@ import json
 
 
 
+
 model = YOLO("train9/weights/best.pt")
 API_KEY ="MSOGTFCDJCZDCMRU"
 API_URL = "https://www.alphavantage.co/query"
@@ -43,6 +44,8 @@ if sys.platform == 'win32':
 
 
 app = FastAPI()
+
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -103,6 +106,26 @@ async def get_stock_data(symbol: str):
     else:
         raise HTTPException(status_code=404, detail="Stock data not found")
 
+def get_element_screenshot(url: str, css_selector: str) -> bytes:
+    API_KEY = 'af7837dbba2f473d9c8aa5b62ec673c0'
+    # Construct the API URL with the element selector
+    API_URL = f"https://api.apiflash.com/v1/urltoimage?access_key={API_KEY}&url={url}&element={css_selector}"
+
+    response = requests.get(API_URL)
+    if response.status_code == 200:
+        return response.content
+    else:
+        raise Exception("Failed to capture screenshot")
+
+
+@app.get("/element_screenshot/")
+async def element_screenshot(url: str, selector: str):
+    try:
+        image_bytes = get_element_screenshot(url, selector)
+        # You could save or directly serve this image as needed
+        return {"message": "Screenshot of element taken successfully", "url": url}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 class DetectionResult(BaseModel):
     image: str
@@ -276,33 +299,85 @@ async def get_pattern(pattern_name: str):
     raise HTTPException(status_code=404, detail="Pattern not found")
 
 
-def run_capture_script():
-    # Assuming the capture script is located at a specific path
-    result = subprocess.run(['node', 'capture.js'], capture_output=True, text=True)
+# def run_capture_script():
+#     # Assuming the capture script is located at a specific path
+#     result = subprocess.run(['node', 'capture.js'], capture_output=True, text=True)
 
-    if result.returncode == 0:
+#     if result.returncode == 0:
         
-        return result.stdout
-    else:
-        raise Exception(f"Script error: {result.stderr}")
+#         return result.stdout
+#     else:
+#         raise Exception(f"Script error: {result.stderr}")
 
+def capture_screenshot(url, output_path):
+    # Set up Chrome options
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Ensure GUI is off
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+
+    # Set path to chromedriver as needed
+    driver = webdriver.Chrome(executable_path='/path/to/chromedriver', options=chrome_options)
+
+    try:
+        driver.get(url)
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.tradingview-widget-container1')))
+        
+        # Screenshot of entire page
+        driver.save_screenshot(output_path)
+    finally:
+        driver.quit()
 
 @app.get("/show-results", response_class=FileResponse)
 async def show_results():
     return "prediction.html"  # Replace with the path to your HTML file
 
-@app.get("/screenshot")
-async def screenshot():
-    loop = asyncio.get_event_loop()
-    with ThreadPoolExecutor() as pool:
-        try:
-            screenshot_url = "/static/screenshots/screenshot.png"
 
-            result = await loop.run_in_executor(pool, run_capture_script)
-            # Success, return or process result
-            return {"message": "Screenshot taken successfully", "url": screenshot_url}
-        except Exception as e:
-            return {"error": str(e)}
+
+# @app.get("/screenshot")
+# async def screenshot():
+#     loop = asyncio.get_event_loop()
+#     with ThreadPoolExecutor() as pool:
+#         try:
+#             screenshot_url = "/static/screenshots/screenshot.png"
+
+#             result = await loop.run_in_executor(pool, run_capture_script)
+#             # Success, return or process result
+#             return {"message": "Screenshot taken successfully", "url": screenshot_url}
+#         except Exception as e:
+#             return {"error": str(e)}
+def capture_element_screenshot(url, css_selector, api_key, output_path):
+    """
+    Captures a screenshot of a specific element on a webpage using the ApiFlash API.
+    """
+    params = {
+        'access_key': api_key,
+        'url': url,
+        'element': css_selector,
+        'format': 'png'
+    }
+    
+    response = requests.get("https://api.apiflash.com/v1/urltoimage", params=params)
+    
+    if response.status_code == 200:
+        with open(output_path, 'wb') as file:
+            file.write(response.content)
+        return output_path
+    else:
+        raise Exception(f"Failed to capture screenshot: {response.status_code} - {response.text}")
+
+@app.get("/screenshot/")
+async def screenshot():
+    API_KEY = 'af7837dbba2f473d9c8aa5b62ec673c0'  # Use your ApiFlash API key
+    URL = 'https://fastapi-app-04xj.onrender.com/'
+    CSS_SELECTOR = '#tradingview-widget'  # The specific element to capture
+    OUTPUT_FILE = 'static/screenshots/screenshot.png'  # Path to save the screenshot
+    
+    try:
+        output_path = capture_element_screenshot(URL, CSS_SELECTOR, API_KEY, OUTPUT_FILE)
+        return {"message": "Screenshot taken successfully", "url": OUTPUT_FILE}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/", response_class=HTMLResponse)
