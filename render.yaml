@@ -12,8 +12,8 @@ services:
     sync: false
   region: oregon
     buildCommand: |
-    apt-get update && apt-get install -y chromium-browser
+    apt-get update &&
+    apt-get install -y chromium-browser &&
     npm install
-  buildCommand: npm install
   startCommand: node capture.js
 version: "1"
