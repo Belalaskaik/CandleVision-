@@ -20,6 +20,7 @@ In our project, CandleVision, we plan to integrate computer vision and AI, empha
 <details>
   <summary>Table of Contents</summary>
   <ol>
+    <li><a href="#contact">Contact</a></li>
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
@@ -32,7 +33,6 @@ In our project, CandleVision, we plan to integrate computer vision and AI, empha
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#Software Development">Software Development</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
