@@ -1,6 +1,13 @@
 version: "1"
 services:
 - type: web
+  name: fastapi-app
+  env: python
+  buildCommand: pip install -r requirements.txt
+  startCommand: uvicorn app.main:app --host 0.0.0.0 --port 8000
+  region: oregon
+
+- type: web
   name: nodejs-service
   runtime: node
   repo: https://github.com/Belalaskaik/CandleVision-
