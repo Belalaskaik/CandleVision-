@@ -77,7 +77,7 @@ To get a local copy up and running follow these simple example steps.
    ```
 2. Install requiements
   ```
-  pip install -e 
+  pip install -e .
   ```
       
 #### Running the server:
