@@ -6,7 +6,7 @@
 
 Hamid Suha - [📫](scuf) - hsuha@csu.fullerton.edu
 
-Belal Skaik - [📫](scuf) - belalaskaik@gmail.com
+Belal Skaik - [📫](scuf) - bskaik1@csu.fullerton.edu
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
