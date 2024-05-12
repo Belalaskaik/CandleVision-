@@ -16,6 +16,9 @@ Belal Skaik - [📫](scuf) - bskaik1@csu.fullerton.edu
 In our project, CandleVision, we plan to integrate computer vision and AI, emphasizing the importance of candlestick patterns in financial market analysis. By incorporating sentiment analysis, our goal is to provide a comprehensive and accessible understanding of market trends for traders of various skill levels. The combination of advanced computer vision and detailed analysis of candlestick patterns aims to simplify and improve trading decision-making. CandleVision is poised to demonstrate how AI can offer deeper insights and a more informed approach to analyzing financial markets.
 
 
+## Project Report:
+https://docs.google.com/document/d/1SXelSVnoR6RSO9Q5sHS1KjTXn8CliMYPHwRjejdnC3E/edit?usp=sharing
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
